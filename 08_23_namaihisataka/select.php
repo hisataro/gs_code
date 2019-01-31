@@ -1,27 +1,35 @@
 <?php
 //1.  DB接続します
-try {
-  $pdo = new PDO('*******:dbname=****;charset=utf8;host=*****','****','*****');
-} catch (PDOException $e) {
-  exit('***************'.$e->getMessage());
-}
+include("funcs.php");
+$pdo = db_con();
 
 //２．データ登録SQL作成
-$stmt = $pdo->prepare("************* *****");
+$stmt = $pdo->prepare("SELECT * FROM gs_bm_table");
 $status = $stmt->execute();
 
 //３．データ表示
 $view="";
 if($status==false) {
     //execute（SQL実行時にエラーがある場合）
-  $error = $stmt->errorInfo();
-  exit("**********:".$error[2]);
-
+  // $error = $stmt->errorInfo();
+  // exit("**********:".$error[2]);
+  sqlError($stmt);
 }else{
   //Selectデータの数だけ自動でループしてくれる
   //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
   while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){ 
-    $view .= "**********";
+    // $view .= $result["id"].",".$result["name"].",".$result["email"].",".$result["naiyou"]."<br>";
+    $view .= '<p>';
+    $view .= '<a href="detail.php?id='.$result["id"] .'">';
+    $view .= '<a href="detail.php?id='.$result["id"] .'">';
+    $view .= $result["id"]. "," .$result["name"].",".$result["url"].",".$result["comment"].",".$result["datetime"];
+    $view .= '</a>';
+    $view .= ' ';
+    $view .= '<a href="delete.php?id='.$result["id"] .'">';
+    $view .= '[削除]';
+    $view .= '</a>';
+    $view .= '</p>';
+  
   }
 
 }
@@ -54,7 +62,9 @@ if($status==false) {
 
 <!-- Main[Start] -->
 <div>
-    <div class="container jumbotron"><?=**********?></div>
+
+      <div class="container jumbotron"><?=$view?></div>
+
 </div>
 <!-- Main[End] -->
 

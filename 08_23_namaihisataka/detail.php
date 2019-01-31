@@ -1,6 +1,6 @@
 <?php
 $id = $_GET["id"];
-echo $id;
+// echo $id;
 
 //---------------------------
 //以下Select.pjpをコピーしてきた。2-24
@@ -9,7 +9,7 @@ include "funcs.php";
 $pdo = db_con();
 
 //２．データ登録SQL作成
-$stmt = $pdo->prepare("SELECT * FROM gs_an_table WHERE id=:id");
+$stmt = $pdo->prepare("SELECT * FROM gs_bm_table WHERE id=:id");
 $stmt->bindValue(":id", $id, PDO::PARAM_INT);
 $status = $stmt->execute();
 
@@ -25,7 +25,6 @@ if ($status == false) {
 }
 //index.php（登録フォームの画面ソースコードを全コピーして、このファイルをまるっと上書き保存）
 ?>
-
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -48,15 +47,15 @@ if ($status == false) {
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
-<form method="post" action="insert.php">
+<form method="post" action="update.php">
   <div class="jumbotron">
    <fieldset>
-    <legend>更新</legend>
-     <label>名前：<input type="text" name="name" value="<?php echo $row["name"]; ?>"></label><br>
-     <label>Email：<input type="text" name="email" value="<?php echo $row["email"]; ?>"></label><br>
-     <!-- <label>年齢：<input type="text" name="age"></label><br> -->
-     <label><textArea name="naiyou" rows="4" cols="40"><?php echo $row["naiyou"]; ?></textArea></label><br>
-     <input type="submit" value="送信">
+    <legend>データ更新</legend>
+     <label>書籍名：<input type="text" name="name" value="<?php echo $row["name"]; ?>"></label><br>
+     <label>書籍URL：<input type="text" name="url" value="<?php echo $row["url"]; ?>"></label><br>
+     <label>書籍コメント：<textArea name="comment" rows="4" cols="40"><?php echo $row["comment"]; ?></textArea></label><br>
+     <input type="hidden" name ="id" value="<?php echo $id;?>">  
+     <input type="submit" value="更新">
     </fieldset>
   </div>
 </form>
@@ -65,3 +64,4 @@ if ($status == false) {
 
 </body>
 </html>
+

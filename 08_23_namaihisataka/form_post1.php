@@ -7,8 +7,9 @@
 <body>
 
 <form method="post" action="form_post2.php">
-<p>お名前:<input type="text" name="name" size="20"></p>
-<p>MAIL:<input type="text" name="mail" size="20"></p>
+<p>書籍:<input type="text" name="name" size="20"></p>
+<p>url:<input type="text" name="url" size="20"></p>
+<p>comment:<input type="text" name="comment" size="20"></p>
 <p><input type="submit" value="送信"></p>
 </form>
 
